@@ -3,5 +3,5 @@ export const DATABASE_TABLES = {
   meetings: 'meetings',
   meeting_invites: 'meeting_invites',
   meeting_users: 'meeting_users',
-  meeting_chats: 'meeting_chats',
+  chats: 'chats',
 };

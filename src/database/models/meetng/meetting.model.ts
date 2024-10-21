@@ -1,4 +1,3 @@
-import { ApiHideProperty } from '@nestjs/swagger';
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection';
 import { BaseModel } from '../../base/base.model';
 import { DATABASE_TABLES } from '../../database.tables';
@@ -15,7 +14,6 @@ export class MeetingModel extends BaseModel implements IMeeting {
   public name: IMeeting['name'];
   public link: IMeeting['link'];
 
-  @ApiHideProperty()
   public user_id: IMeeting['user_id'];
 
   static get tableName() {
