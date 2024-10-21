@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { IRole } from '../database/models/role/role.interface';
+
 import { UserModel } from '../database/models/user/user.model';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const user: UserModel & { roles?: IRole[] } = await UserModel.query()
+    const user: UserModel & { roles?: any[] } = await UserModel.query()
       .findOne({ id: req.user.id })
       .withGraphFetched('[roles]');
 

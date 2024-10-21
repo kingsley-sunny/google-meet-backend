@@ -16,6 +16,7 @@ export class ChatModel extends BaseModel implements IChat {
   public user_id: IChat['user_id'];
   public temporary_user_id: IChat['temporary_user_id'];
   public message: IChat['message'];
+  public user_name: IChat['user_name'];
 
   static get tableName() {
     return DATABASE_TABLES.chats;

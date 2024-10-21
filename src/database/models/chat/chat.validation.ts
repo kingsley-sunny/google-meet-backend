@@ -9,5 +9,6 @@ export const ChatValidation: JSONSchema = {
     user_id: { type: 'number' },
     temporary_user_id: { type: 'string' },
     message: { type: 'string' },
+    user_name: { type: 'string' },
   },
 };
