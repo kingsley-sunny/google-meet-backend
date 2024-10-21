@@ -22,7 +22,7 @@ export async function up(knex: Knex): Promise<void> {
         .defaultTo(knex.raw('(UUID())'));
 
       tableBuilder.string('name').nullable();
-      tableBuilder.string('temporary_user_id').nullable();
+      tableBuilder.uuid('temporary_user_id').nullable();
 
       tableBuilder
         .bigint('user_id')
@@ -39,6 +39,9 @@ export async function up(knex: Knex): Promise<void> {
         .references('id')
         .inTable(DATABASE_TABLES.meetings)
         .onDelete('CASCADE');
+
+      // create index for temporary_user_id
+      tableBuilder.index('temporary_user_id');
     },
   );
 }

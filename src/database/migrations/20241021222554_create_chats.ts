@@ -31,9 +31,8 @@ export async function up(knex: Knex): Promise<void> {
         .onDelete('RESTRICT');
 
       tableBuilder
-        .bigint('temporary_user_id')
+        .uuid('temporary_user_id')
         .nullable()
-        .unsigned()
         .references('temporary_user_id')
         .inTable(DATABASE_TABLES.meeting_users)
         .onDelete('RESTRICT');
