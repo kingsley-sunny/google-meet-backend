@@ -17,11 +17,6 @@ export class EnvironmentService {
       DB_NAME,
       DB_PORT,
       JWT_SECRET_TOKEN,
-      RESEND_API_KEY,
-      CLOUDINARY_NAME,
-      CLOUDINARY_KEY,
-      CLOUDINARY_SECRET,
-      CLOUDINARY_FOLDER,
       NODE_ENV,
     } = process.env;
 
@@ -33,11 +28,6 @@ export class EnvironmentService {
       dbPort: DB_PORT,
       dbUser: DB_USER,
       jwtSecretToken: JWT_SECRET_TOKEN,
-      resendApiKey: RESEND_API_KEY,
-      cloudinary_key: CLOUDINARY_KEY,
-      cloudinary_secret: CLOUDINARY_SECRET,
-      cloudinary_name: CLOUDINARY_NAME,
-      cloudinary_folder: CLOUDINARY_FOLDER,
       node_env: NODE_ENV,
     };
   }
