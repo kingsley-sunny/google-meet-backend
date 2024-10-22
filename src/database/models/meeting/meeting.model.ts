@@ -2,8 +2,8 @@ import { Model, RelationMappings, RelationMappingsThunk } from 'objection';
 import { BaseModel } from '../../base/base.model';
 import { DATABASE_TABLES } from '../../database.tables';
 import { UserModel } from '../user/user.model';
-import { IMeeting } from './meetting.interface';
-import { MeetingValidation } from './meetting.validation';
+import { IMeeting } from './meeting.interface';
+import { MeetingValidation } from './meeting.validation';
 
 export class MeetingModel extends BaseModel implements IMeeting {
   public id: IMeeting['id'];

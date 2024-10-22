@@ -101,4 +101,24 @@ export class UtilsService {
 
     return data;
   }
+
+  public static generateRandomLetters(): string {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+
+    for (let i = 0; i < 9; i++) {
+      // Get a random letter from the letters string
+      const randomLetter = letters.charAt(
+        Math.floor(Math.random() * letters.length),
+      );
+      result += randomLetter;
+
+      // Add a dash after every 4 letters, except at the end
+      if ((i + 1) % 4 === 0 && i < 8) {
+        result += '-';
+      }
+    }
+
+    return result;
+  }
 }

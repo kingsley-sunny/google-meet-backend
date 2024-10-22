@@ -29,6 +29,8 @@ export async function up(knex: Knex): Promise<void> {
         .references('id')
         .inTable(DATABASE_TABLES.users)
         .onDelete('CASCADE');
+
+      tableBuilder.index('link');
     },
   );
 }

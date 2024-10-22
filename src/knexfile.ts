@@ -1,4 +1,4 @@
-import { EnvironmentService } from './src/config/environment/environment.service';
+import { EnvironmentService } from './config/environment/environment.service';
 
 const { dbHost, dbName, dbPassword, dbPort, dbUser, node_env } =
   EnvironmentService.getValues();

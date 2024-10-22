@@ -2,7 +2,7 @@ import { ApiHideProperty } from '@nestjs/swagger';
 import { Model, RelationMappings, RelationMappingsThunk } from 'objection';
 import { BaseModel } from '../../base/base.model';
 import { DATABASE_TABLES } from '../../database.tables';
-import { MeetingModel } from '../meetng/meetting.model';
+import { MeetingModel } from '../meeting/meeting.model';
 import { IUser } from './user.interface';
 import { UserValidation } from './user.validation';
 import { UserPasswordOption } from './userPasswordOption';

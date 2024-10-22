@@ -1,7 +1,7 @@
 import { Logger, Provider } from '@nestjs/common';
 import Knex from 'knex';
 import { Model } from 'objection';
-import KnexConfig from '../../knexfile';
+import KnexConfig from '../knexfile';
 
 export const knex = Knex(KnexConfig);
 
