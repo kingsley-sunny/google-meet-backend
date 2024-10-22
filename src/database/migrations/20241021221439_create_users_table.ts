@@ -21,7 +21,9 @@ export async function up(knex: Knex): Promise<void> {
 
       tableBuilder.string('name', 129).notNullable();
       tableBuilder.string('email').notNullable().unique();
-      tableBuilder.string('password').notNullable();
+      tableBuilder.string('password').nullable();
+      tableBuilder.string('registration_provider').nullable();
+      tableBuilder.string('pic_url').nullable();
 
       tableBuilder.timestamps(true, true);
     },

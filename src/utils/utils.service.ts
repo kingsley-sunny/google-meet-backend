@@ -8,6 +8,9 @@ export class UtilsService {
    * hashPassword
    */
   public static async hashPassword(password: string): Promise<string> {
+    if (!password) {
+      return undefined;
+    }
     const hashedPassword = await bcrypt.hash(password, SALTS_ROUNDS);
 
     return hashedPassword;

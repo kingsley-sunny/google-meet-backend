@@ -15,6 +15,9 @@ export class UserModel extends BaseModel implements IUser {
 
   public name: IUser['name'];
   public email: IUser['email'];
+  public registration_provider: IUser['registration_provider'];
+
+  public pic_url: IUser['registration_provider'];
 
   @ApiHideProperty()
   public password: IUser['password'];

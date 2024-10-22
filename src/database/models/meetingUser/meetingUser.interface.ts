@@ -5,4 +5,5 @@ export interface IMeetingUser extends IBase {
   user_id: number;
   name: string;
   temporary_user_id: string;
+  meeting_token: string;
 }
