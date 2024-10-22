@@ -9,6 +9,7 @@ import {
 import { FetchQuery } from '../../database/base/base.interface';
 import { IMeeting } from '../../database/models/meeting/meeting.interface';
 import { UtilsService } from '../../utils/utils.service';
+import { MeetingInviteService } from '../meetingInvite';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { MeetingRepository } from './meeting.repository';
 
@@ -16,6 +17,8 @@ import { MeetingRepository } from './meeting.repository';
 export class MeetingService {
   @Inject(MeetingRepository)
   meetingRepository: MeetingRepository;
+  @Inject(MeetingInviteService)
+  meetingInviteService: MeetingInviteService;
 
   async create(userId: number, data: CreateMeetingDto) {
     Logger.log('create', 'MeetingService');
@@ -60,7 +63,9 @@ export class MeetingService {
     Logger.log('findOne', 'MeetingService');
 
     const meeting = await this.meetingRepository.findOne(params);
-
+    if (!meeting) {
+      throw new NotFoundException('Meeting not found');
+    }
     return meeting;
   }
 
@@ -75,7 +80,7 @@ export class MeetingService {
     return meeting;
   }
 
-  async JoinMeetingLink(link: string, token: string, userId: number) {
+  async JoinMeetingLink(link: string, tempId: string, userId: number) {
     Logger.log('JoinMeetingLink', 'MeetingService');
 
     const meeting = await this.meetingRepository.findOne({ link });
@@ -83,11 +88,13 @@ export class MeetingService {
       throw new NotFoundException('Meeting not found');
     }
 
-    if (meeting.user_id !== userId && !token) {
+    if (meeting.user_id !== userId && !tempId) {
       throw new UnauthorizedException('You are not allowed in this meeting');
     }
 
-    //Todo: check if the token is in the meeting invites
+    //todo: check if the user is part of this meeting
+
+    //todo: if true, then notify the user
 
     return meeting;
   }

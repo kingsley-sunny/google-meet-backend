@@ -18,7 +18,7 @@ import { BaseApiResponse } from '../../base/base-api-response';
 import { ROLES } from '../../base/base.constant';
 import { FetchQuery } from '../../database/base/base.interface';
 import { MeetingModel } from '../../database/models/meeting/meeting.model';
-import { MeetingToken } from '../../decorators/meetingToken.decorator';
+import { TemporaryId } from '../../decorators/temporaryId.decorator';
 import { Roles } from '../../decorators/roles.decorator';
 import { UserId } from '../../decorators/userId.decorator';
 import { MeetingGuard } from '../../guards/meeting.guard';
@@ -69,11 +69,11 @@ export class MeetingController {
   async findByLink(
     @Param('link') link: string,
     @UserId() userId: number,
-    @MeetingToken() token: string,
+    @TemporaryId() tempId: string,
   ) {
     const meetings = await this.meetingService.JoinMeetingLink(
       link,
-      token,
+      tempId,
       userId,
     );
 

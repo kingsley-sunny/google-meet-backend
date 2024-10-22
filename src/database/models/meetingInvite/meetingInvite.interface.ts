@@ -8,7 +8,7 @@ export enum InviteStatus {
 
 export interface IMeetingInvite extends IBase {
   meeting_id: number;
-  status: InviteStatus;
+  status: keyof typeof InviteStatus;
   user_id: number;
   name: string;
 }

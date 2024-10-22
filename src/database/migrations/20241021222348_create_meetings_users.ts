@@ -23,7 +23,7 @@ export async function up(knex: Knex): Promise<void> {
 
       tableBuilder.string('name').nullable();
       tableBuilder.uuid('temporary_user_id').nullable();
-      tableBuilder.string('meeting_token').notNullable();
+      tableBuilder.string('status').notNullable();
 
       tableBuilder
         .bigint('user_id')

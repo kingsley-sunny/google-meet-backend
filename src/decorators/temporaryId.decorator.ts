@@ -1,10 +1,10 @@
 import { createParamDecorator, ExecutionContext, Logger } from '@nestjs/common';
 
-export const MeetingToken = createParamDecorator(
+export const TemporaryId = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    Logger.log('MeetingToken', 'MeetingToken.Decorator');
+    Logger.log('TemporaryId', 'TemporaryId.Decorator');
 
     const request = ctx.switchToHttp().getRequest();
-    return request.meetingToken;
+    return request.tempId;
   },
 );

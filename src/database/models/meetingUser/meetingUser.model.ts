@@ -15,7 +15,7 @@ export class MeetingUserModel extends BaseModel implements IMeetingUser {
   public user_id: IMeetingUser['user_id'];
   public name: IMeetingUser['name'];
   public temporary_user_id: IMeetingUser['temporary_user_id'];
-  public meeting_token: IMeetingUser['meeting_token'];
+  public status: IMeetingUser['status'];
 
   static get tableName() {
     return DATABASE_TABLES.users;
