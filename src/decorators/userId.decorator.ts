@@ -5,6 +5,7 @@ export const UserId = createParamDecorator(
     Logger.log('UserId', 'UserId.Decorator');
 
     const request = ctx.switchToHttp().getRequest();
-    return request.user.id;
+
+    return request.user?.id;
   },
 );

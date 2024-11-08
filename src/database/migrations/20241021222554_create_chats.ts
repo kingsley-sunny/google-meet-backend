@@ -12,9 +12,8 @@ export async function up(knex: Knex): Promise<void> {
   return await knex.schema.createTable(
     DATABASE_TABLES.chats,
     (tableBuilder) => {
-      tableBuilder.bigIncrements('id').unique().primary().notNullable();
       tableBuilder
-        .uuid('uuid')
+        .uuid('id')
         .notNullable()
         .unique()
         .defaultTo(knex.raw('(UUID())'));
@@ -23,24 +22,17 @@ export async function up(knex: Knex): Promise<void> {
       tableBuilder.text('message').notNullable();
 
       tableBuilder
-        .bigint('user_id')
+        .uuid('user_id')
         .nullable()
-        .unsigned()
+
         .references('id')
         .inTable(DATABASE_TABLES.users)
         .onDelete('RESTRICT');
 
       tableBuilder
-        .uuid('temporary_user_id')
-        .nullable()
-        .references('temporary_user_id')
-        .inTable(DATABASE_TABLES.meeting_users)
-        .onDelete('RESTRICT');
-
-      tableBuilder
-        .bigint('meeting_id')
+        .uuid('meeting_id')
         .notNullable()
-        .unsigned()
+
         .references('id')
         .inTable(DATABASE_TABLES.meetings)
         .onDelete('CASCADE');

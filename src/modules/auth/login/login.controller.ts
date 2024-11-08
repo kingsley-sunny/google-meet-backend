@@ -8,10 +8,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { BaseService } from '../../../base';
 import { BaseApiResponse } from '../../../base/base-api-response';
+import { BaseService } from '../../../base/base.service';
 import { Public } from '../../../decorators/public.decorator';
-import { LoginDto } from './dto';
+import { LoginDto } from './dto/login.dto';
 import { LoginResponse } from './login.response';
 import { LoginService } from './login.service';
 

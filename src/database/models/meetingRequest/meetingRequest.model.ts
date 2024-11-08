@@ -2,25 +2,25 @@ import { Model, RelationMappings, RelationMappingsThunk } from 'objection';
 import { BaseModel } from '../../base/base.model';
 import { DATABASE_TABLES } from '../../database.tables';
 import { UserModel } from '../user/user.model';
-import { IChat } from './chat.interface';
-import { ChatValidation } from './chat.validation';
+import { IMeetingRequest } from './meetingRequest.interface';
+import { MeetingRequestValidation } from './meetingRequest.validation';
 
-export class ChatModel extends BaseModel implements IChat {
-  public id: IChat['id'];
-  public created_at: IChat['created_at'];
-  public updated_at: IChat['updated_at'];
+export class MeetingRequestModel extends BaseModel implements IMeetingRequest {
+  public id: IMeetingRequest['id'];
+  public created_at: IMeetingRequest['created_at'];
+  public updated_at: IMeetingRequest['updated_at'];
 
-  public meeting_id: IChat['meeting_id'];
-  public user_id: IChat['user_id'];
-  public message: IChat['message'];
-  public user_name: IChat['user_name'];
+  public meeting_id: IMeetingRequest['meeting_id'];
+  public status: IMeetingRequest['status'];
+  public user_id: IMeetingRequest['user_id'];
+  public name: IMeetingRequest['name'];
 
   static get tableName() {
-    return DATABASE_TABLES.chats;
+    return DATABASE_TABLES.meeting_requests;
   }
 
   static get jsonSchema() {
-    return ChatValidation;
+    return MeetingRequestValidation;
   }
 
   static get relationMappings(): RelationMappings | RelationMappingsThunk {

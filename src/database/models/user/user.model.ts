@@ -9,7 +9,6 @@ import { UserPasswordOption } from './userPasswordOption';
 
 export class UserModel extends BaseModel implements IUser {
   public id: IUser['id'];
-  public uuid: IUser['uuid'];
   public created_at: IUser['created_at'];
   public updated_at: IUser['updated_at'];
 

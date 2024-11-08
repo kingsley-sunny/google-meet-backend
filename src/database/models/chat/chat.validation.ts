@@ -5,9 +5,8 @@ export const ChatValidation: JSONSchema = {
   title: 'Chat Schema Validation',
   required: ['meeting_id', 'message'],
   properties: {
-    meeting_id: { type: 'number' },
-    user_id: { type: 'number' },
-    temporary_user_id: { type: 'string' },
+    meeting_id: { type: 'string' },
+    user_id: { type: 'string' },
     message: { type: 'string' },
     user_name: { type: 'string' },
   },

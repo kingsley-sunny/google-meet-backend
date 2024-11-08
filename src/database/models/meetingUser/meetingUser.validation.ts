@@ -3,13 +3,10 @@ import { JSONSchema } from 'objection';
 export const MeetingUserValidation: JSONSchema = {
   type: 'object',
   title: 'MeetingUser Schema Validation',
-  required: ['meeting_id', 'meeting_token', 'status'],
+  required: ['meeting_id', 'status'],
   properties: {
-    meeting_id: { type: 'number' },
-    user_id: { type: 'number' },
+    meeting_id: { type: 'string' },
     name: { type: 'string' },
-    meeting_token: { type: 'string' },
-    temporary_user_id: { type: 'string' },
     status: { type: 'string' },
   },
 };

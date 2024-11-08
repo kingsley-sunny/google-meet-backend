@@ -7,7 +7,7 @@ import {
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
 import { IUser } from '../../../database/models/user/user.interface';
-import { UserRepository } from '../../user';
+import { UserRepository } from '../../user/user.repository';
 import { JwtObject } from './jwtObject';
 import { TokenPayload } from './tokenPayload.interface';
 
@@ -20,15 +20,20 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super(JwtObject);
   }
 
-  async validate({ email, uuid }: TokenPayload) {
-    Logger.log('Validate', 'JwtStrategy');
+  async validate({ email, id }: TokenPayload) {
+    try {
+      Logger.log('Validate', 'JwtStrategy');
 
-    const user: IUser = await this.userRepository.findOne({ email, uuid }, {});
+      const user: IUser = await this.userRepository.findOne({ email, id }, {});
 
-    if (!user) {
-      throw new UnauthorizedException('User Not Found');
+      if (!user) {
+        throw new UnauthorizedException('User Not Found');
+      }
+
+      return user;
+    } catch (error) {
+      Logger.error('Validate', 'JwtStrategy', error.message);
+      throw new Error(error.message);
     }
-
-    return user;
   }
 }

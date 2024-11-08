@@ -4,19 +4,18 @@ import { DATABASE_TABLES } from '../database.tables';
 
 export async function up(knex: Knex): Promise<void> {
   const isTableExists = await knex.schema.hasTable(
-    DATABASE_TABLES.meeting_invites,
+    DATABASE_TABLES.meeting_requests,
   );
 
   if (isTableExists) {
-    knex.schema.dropTable(DATABASE_TABLES.meeting_invites);
+    knex.schema.dropTable(DATABASE_TABLES.meeting_requests);
   }
 
   return await knex.schema.createTable(
-    DATABASE_TABLES.meeting_invites,
+    DATABASE_TABLES.meeting_requests,
     (tableBuilder) => {
-      tableBuilder.bigIncrements('id').unique().primary().notNullable();
       tableBuilder
-        .uuid('uuid')
+        .uuid('id')
         .notNullable()
         .unique()
         .defaultTo(knex.raw('(UUID())'));
@@ -25,17 +24,15 @@ export async function up(knex: Knex): Promise<void> {
       tableBuilder.string('status').notNullable();
 
       tableBuilder
-        .bigint('user_id')
+        .uuid('user_id')
         .nullable()
-        .unsigned()
         .references('id')
         .inTable(DATABASE_TABLES.users)
         .onDelete('CASCADE');
 
       tableBuilder
-        .bigint('meeting_id')
+        .uuid('meeting_id')
         .notNullable()
-        .unsigned()
         .references('id')
         .inTable(DATABASE_TABLES.meetings)
         .onDelete('CASCADE');

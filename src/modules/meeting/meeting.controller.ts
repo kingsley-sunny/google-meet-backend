@@ -13,12 +13,12 @@ import {
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { BaseService } from '../../base';
 import { BaseApiResponse } from '../../base/base-api-response';
 import { ROLES } from '../../base/base.constant';
+import { BaseService } from '../../base/base.service';
 import { FetchQuery } from '../../database/base/base.interface';
 import { MeetingModel } from '../../database/models/meeting/meeting.model';
-import { TemporaryId } from '../../decorators/temporaryId.decorator';
+import { MeetingUserId } from '../../decorators/meetingUserId.decorator';
 import { Roles } from '../../decorators/roles.decorator';
 import { UserId } from '../../decorators/userId.decorator';
 import { MeetingGuard } from '../../guards/meeting.guard';
@@ -41,7 +41,7 @@ export class MeetingController {
       isPaginate: true,
     }),
   })
-  async create(@UserId() userId: number, @Body() data: CreateMeetingDto) {
+  async create(@UserId() userId: string, @Body() data: CreateMeetingDto) {
     const meeting = await this.meetingService.create(userId, data);
 
     return BaseService.transformResponse(
@@ -65,17 +65,13 @@ export class MeetingController {
     }),
   })
   @UseGuards(MeetingGuard)
-  @Get(':link')
-  async findByLink(
-    @Param('link') link: string,
-    @UserId() userId: number,
-    @TemporaryId() tempId: string,
+  @Get(':id')
+  async findById(
+    @Param('id') id: string,
+    @UserId() userId: string,
+    @MeetingUserId() meetingUserId: string,
   ) {
-    const meetings = await this.meetingService.JoinMeetingLink(
-      link,
-      tempId,
-      userId,
-    );
+    const meetings = await this.meetingService.findById(id);
 
     return BaseService.transformResponse(meetings, 'Successful');
   }

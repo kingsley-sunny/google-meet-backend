@@ -11,8 +11,7 @@ export interface FetchQuery {
 }
 
 export interface IBase {
-  id: number;
-  uuid: string;
+  id: string;
   created_at: string;
   updated_at: string;
 }

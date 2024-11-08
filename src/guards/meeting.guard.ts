@@ -20,23 +20,23 @@ export class MeetingGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     Logger.log('CancanActivate', 'MeetingGuard');
     const request = this.getRequest(context);
-    const { tempId, token } = this.extractTokenFromHeader(request);
+    const { meetingUserId, token } = this.extractTokenFromHeader(request);
 
-    if (!tempId && !token) {
+    if (!meetingUserId && !token) {
       throw new UnauthorizedException(
         'You are authorized to join this meeting',
       );
     }
 
-    request['tempId'] = tempId;
+    request['meetingUserId'] = meetingUserId;
     return true;
   }
 
   private extractTokenFromHeader(request: Request) {
-    const tempId = request.headers.get('temp-id');
+    const meetingUserId = request.headers.get('temp-id');
     const [type, token] =
       request.headers.get('authorization')?.split(' ') ?? [];
 
-    return { tempId, token };
+    return { meetingUserId, token };
   }
 }

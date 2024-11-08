@@ -1,12 +1,12 @@
 import { JSONSchema } from 'objection';
 
-export const MeetingInviteValidation: JSONSchema = {
+export const MeetingRequestValidation: JSONSchema = {
   type: 'object',
-  title: 'MeetingInvite Schema Validation',
+  title: 'MeetingRequest Schema Validation',
   required: ['meeting_id', 'status'],
   properties: {
-    meeting_id: { type: 'number' },
-    user_id: { type: 'number' },
+    meeting_id: { type: 'string' },
+    user_id: { type: 'string' },
     status: { type: 'string' },
     name: { type: 'string' },
   },

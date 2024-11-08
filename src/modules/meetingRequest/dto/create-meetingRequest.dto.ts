@@ -1,17 +1,15 @@
 import { IsString, ValidateIf } from 'class-validator';
 import { IsExistsIn } from '../../../decorators/IsExistsIn.decorator';
 import { MeetingRepository } from '../../meeting/meeting.repository';
-import { UserRepository } from '../../user';
-
-export class CreateMeetingInviteDto {
+export class CreateMeetingRequestDto {
   @IsExistsIn('id', new MeetingRepository())
-  meeting_id: number;
+  meeting_id: string;
 
   @IsString()
   @ValidateIf((o) => !o.user_id)
   name: string;
 
-  @ValidateIf((o) => !o.name)
-  @IsExistsIn('id', new UserRepository())
-  user_id: number;
+  // @Optional()
+  // @IsExistsIn('id', new UserRepository())
+  // meeting_user_id: string;
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { randomUUID } from 'crypto';
 import { FRONT_END_URL, SALTS_ROUNDS } from '../base/base.constant';
 
 @Injectable()
@@ -120,5 +121,9 @@ export class UtilsService {
     }
 
     return result;
+  }
+
+  public static generateMeetingToken(userId: string) {
+    return `${Date.now().toString(36)}:${randomUUID()}:${userId}`;
   }
 }

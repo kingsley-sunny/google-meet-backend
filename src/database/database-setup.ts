@@ -1,4 +1,4 @@
-import KnexConfig from '../knexfile';
+import KnexConfig from '../../knexfile';
 import { knex } from './database.provider';
 
 export class SetUpMigrationsAndSeeds {

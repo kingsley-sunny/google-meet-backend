@@ -12,25 +12,21 @@ export async function up(knex: Knex): Promise<void> {
   return await knex.schema.createTable(
     DATABASE_TABLES.meetings,
     (tableBuilder) => {
-      tableBuilder.bigIncrements('id').unique().primary().notNullable();
       tableBuilder
-        .uuid('uuid')
+        .uuid('id')
         .notNullable()
         .unique()
         .defaultTo(knex.raw('(UUID())'));
 
       tableBuilder.string('name').notNullable();
-      tableBuilder.string('link').notNullable().unique();
+      tableBuilder.string('token').notNullable();
 
       tableBuilder
-        .bigint('user_id')
+        .uuid('user_id')
         .notNullable()
-        .unsigned()
         .references('id')
         .inTable(DATABASE_TABLES.users)
         .onDelete('CASCADE');
-
-      tableBuilder.index('link');
     },
   );
 }

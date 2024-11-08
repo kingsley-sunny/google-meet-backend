@@ -8,9 +8,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { BaseService } from '../../base';
 import { BaseApiResponse } from '../../base/base-api-response';
 import { ROLES } from '../../base/base.constant';
+import { BaseService } from '../../base/base.service';
 import { FetchQuery } from '../../database/base/base.interface';
 import { UserModel } from '../../database/models/user/user.model';
 import { Roles } from '../../decorators/roles.decorator';
@@ -47,7 +47,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: number) {
+  async findById(@Param('id') id: string) {
     const users = await this.userService.findById(id);
 
     return BaseService.transformResponse(users, 'Successful');

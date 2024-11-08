@@ -14,6 +14,8 @@ export class LoginService {
   jwtService: JwtService;
 
   async create(user: IUser) {
+    console.log('🚀 ~~ LoginService ~~ create ~~ user:', user);
+
     Logger.log('Create', 'LoginService');
 
     try {
@@ -22,7 +24,6 @@ export class LoginService {
         accessToken: this.jwtService.sign(
           {
             id: user.id,
-            uuid: user.uuid,
             email: user.email,
           },
           { expiresIn: '7 days' },

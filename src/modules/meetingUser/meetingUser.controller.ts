@@ -1,25 +1,17 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { BaseService } from '../../base';
 import { BaseApiResponse } from '../../base/base-api-response';
 import { FetchQuery } from '../../database/base/base.interface';
 
+import { BaseService } from '../../base/base.service';
 import { MeetingUserModel } from '../../database/models/meetingUser/meetingUser.model';
 import { UserId } from '../../decorators/userId.decorator';
 import { CreateMeetingUserDto } from './dto/create-meetingUser.dto';
 import { UpdateMeetingUserDto } from './dto/update-meetingUser.dto';
 import { MeetingUserService } from './meetingUser.service';
 
-@Controller('/meetings/users')
-@ApiTags('meetings/users')
+@Controller('/meetings-users')
+@ApiTags('meetings-users')
 export class MeetingUserController {
   @Inject(MeetingUserService)
   private meetingUserService: MeetingUserService;
@@ -33,8 +25,8 @@ export class MeetingUserController {
       isPaginate: true,
     }),
   })
-  async create(@Body() data: CreateMeetingUserDto) {
-    const meetingUser = await this.meetingUserService.create(data);
+  async create(@UserId() userId: string, @Body() data: CreateMeetingUserDto) {
+    const meetingUser = await this.meetingUserService.create(userId, data);
 
     return BaseService.transformResponse(
       meetingUser,
@@ -52,19 +44,17 @@ export class MeetingUserController {
     }),
   })
   async updateUser(
-    @Param('id') id: number,
-    @UserId() userId: number,
+    @UserId() userId: string,
     @Body() data: UpdateMeetingUserDto,
   ) {
     const meetingUser = await this.meetingUserService.updateStatus(
-      id,
       userId,
       data,
     );
 
     return BaseService.transformResponse(
       meetingUser,
-      'MeetingUser Created Successfully',
+      'MeetingUser updated Successfully',
     );
   }
 

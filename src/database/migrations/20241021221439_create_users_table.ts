@@ -12,9 +12,8 @@ export async function up(knex: Knex): Promise<void> {
   return await knex.schema.createTable(
     DATABASE_TABLES.users,
     (tableBuilder) => {
-      tableBuilder.bigIncrements('id').unique().primary().notNullable();
       tableBuilder
-        .uuid('uuid')
+        .uuid('id')
         .notNullable()
         .unique()
         .defaultTo(knex.raw('(UUID())'));

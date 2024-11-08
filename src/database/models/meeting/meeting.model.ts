@@ -7,14 +7,12 @@ import { MeetingValidation } from './meeting.validation';
 
 export class MeetingModel extends BaseModel implements IMeeting {
   public id: IMeeting['id'];
-  public uuid: IMeeting['uuid'];
   public created_at: IMeeting['created_at'];
   public updated_at: IMeeting['updated_at'];
 
   public name: IMeeting['name'];
-  public link: IMeeting['link'];
-
   public user_id: IMeeting['user_id'];
+  public token: IMeeting['token'];
 
   static get tableName() {
     return DATABASE_TABLES.meetings;

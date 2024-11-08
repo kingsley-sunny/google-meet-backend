@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
   Inject,
   Injectable,
   Logger,
@@ -8,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { UserPasswordOption } from '../../database/models/user/userPasswordOption';
 import { UtilsService } from '../../utils/utils.service';
-import { UserService } from '../user';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -20,15 +19,14 @@ export class AuthService {
 
     UserPasswordOption.showPassword();
     const user = await this.userService.findUserWithEmail(username);
+    console.log('🚀 ~~ AuthService ~~ validateUser ~~ user:', user);
 
     if (!user) {
       throw new NotFoundException('User do not exists');
     }
 
     if (user.registration_provider === 'google') {
-      throw new ConflictException(
-        'This account is already registered with Google, Sign in with google instead',
-      );
+      return user;
     }
 
     const isPasswordMatched = await UtilsService.comparePassword(

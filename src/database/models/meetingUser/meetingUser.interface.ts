@@ -6,9 +6,9 @@ export enum MeetingUserStatus {
 }
 
 export interface IMeetingUser extends IBase {
-  meeting_id: number;
-  user_id: number;
+  meeting_id: string;
   name: string;
-  temporary_user_id: string;
+
+  user_id: string;
   status: keyof typeof MeetingUserStatus;
 }

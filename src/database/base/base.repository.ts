@@ -12,7 +12,6 @@ export abstract class BaseRepository<ModelInterface = any> {
 
     const response = await this.model.transaction(async (trx) => {
       const createdData = this.model.query(trx).insertGraphAndFetch(data);
-
       return createdData;
     });
 
@@ -210,7 +209,7 @@ export abstract class BaseRepository<ModelInterface = any> {
   }
 
   async findById(
-    id: number,
+    id: string,
     graphFetch?: string,
     graphModifier?: {
       relationship: string;
@@ -243,7 +242,7 @@ export abstract class BaseRepository<ModelInterface = any> {
     },
   ): Promise<Required<ModelInterface>>;
   async update(
-    id: number,
+    id: number | string,
     data2: Partial<ModelInterface>,
     graphFetch?: string,
     graphModifier?: {
@@ -254,7 +253,7 @@ export abstract class BaseRepository<ModelInterface = any> {
     },
   ): Promise<Required<ModelInterface>>;
   async update(
-    idOrModel: number | Partial<ModelInterface>,
+    idOrModel: number | string | Partial<ModelInterface>,
     data: Partial<ModelInterface>,
     graphFetch?: string,
     graphModifier?: {
@@ -298,7 +297,7 @@ export abstract class BaseRepository<ModelInterface = any> {
     return response as Required<ModelInterface>;
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     Logger.log('delete', 'BaseRepository');
 
     const response = await this.model.query().delete().where({ id: id });

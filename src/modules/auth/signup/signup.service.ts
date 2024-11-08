@@ -8,8 +8,8 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 import { IUser } from '../../../database/models/user/user.interface';
-import { UserService } from '../../user';
 import { CreateUserDto } from '../../user/dto/create-user.dto';
+import { UserService } from '../../user/user.service';
 
 @Injectable()
 export class SignUpService {
@@ -42,16 +42,18 @@ export class SignUpService {
 
       delete user.password;
 
+      const accessToken = await this.jwtService.signAsync(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        { expiresIn: '7 days' },
+      );
+      console.log('🚀 ~~ SignUpService ~~ create ~~ accessToken:', accessToken);
+
       return {
         ...user,
-        accessToken: this.jwtService.sign(
-          {
-            id: user.id,
-            uuid: user.uuid,
-            email: user.email,
-          },
-          { expiresIn: '7 days' },
-        ),
+        accessToken,
       };
     } catch (error) {
       Logger.error(error.message, 'SignupService');

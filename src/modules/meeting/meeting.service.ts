@@ -1,15 +1,15 @@
 import {
+  forwardRef,
   Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { FetchQuery } from '../../database/base/base.interface';
 import { IMeeting } from '../../database/models/meeting/meeting.interface';
 import { UtilsService } from '../../utils/utils.service';
-import { MeetingInviteService } from '../meetingInvite';
+import { MeetingRequestService } from '../meetingRequest/meetingRequest.service';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { MeetingRepository } from './meeting.repository';
 
@@ -17,28 +17,28 @@ import { MeetingRepository } from './meeting.repository';
 export class MeetingService {
   @Inject(MeetingRepository)
   meetingRepository: MeetingRepository;
-  @Inject(MeetingInviteService)
-  meetingInviteService: MeetingInviteService;
+  @Inject(forwardRef(() => MeetingRequestService))
+  meetingRequestService: MeetingRequestService;
 
-  async create(userId: number, data: CreateMeetingDto) {
+  async create(userId: string, data: CreateMeetingDto) {
     Logger.log('create', 'MeetingService');
 
     let meeting: IMeeting;
     try {
       let { name } = data;
-      const link = UtilsService.generateRandomLetters();
 
       if (!name) {
-        name = 'New Meeting - ' + link;
+        name = 'New Meeting ' + new Date().toDateString();
       }
 
       meeting = await this.meetingRepository.create({
         name,
-        link,
         user_id: userId,
+        token: UtilsService.generateMeetingToken(userId),
       });
     } catch (error) {
       Logger.log(error.message, 'MeetingService');
+      console.log(error);
       throw new InternalServerErrorException(error.message);
     }
 
@@ -49,7 +49,7 @@ export class MeetingService {
     Logger.log('find', 'MeetingService');
 
     try {
-      const meetings = await this.meetingRepository.find({}, params, 'roles');
+      const meetings = await this.meetingRepository.find({}, params);
 
       return meetings;
     } catch (error) {
@@ -69,37 +69,23 @@ export class MeetingService {
     return meeting;
   }
 
-  async findById(id: number) {
+  async findById(id: string) {
     Logger.log('findById', 'MeetingService');
 
-    const meeting = await this.meetingRepository.findById(id);
-    if (!meeting) {
-      throw new NotFoundException('Meeting not found');
-    }
+    try {
+      const meeting = await this.meetingRepository.findById(id);
+      if (!meeting) {
+        throw new NotFoundException('Meeting not found');
+      }
 
-    return meeting;
+      return meeting;
+    } catch (error) {
+      Logger.log(error.message, 'findById');
+      throw new InternalServerErrorException(error.message);
+    }
   }
 
-  async JoinMeetingLink(link: string, tempId: string, userId: number) {
-    Logger.log('JoinMeetingLink', 'MeetingService');
-
-    const meeting = await this.meetingRepository.findOne({ link });
-    if (!meeting) {
-      throw new NotFoundException('Meeting not found');
-    }
-
-    if (meeting.user_id !== userId && !tempId) {
-      throw new UnauthorizedException('You are not allowed in this meeting');
-    }
-
-    //todo: check if the user is part of this meeting
-
-    //todo: if true, then notify the user
-
-    return meeting;
-  }
-
-  async delete(id: number) {
+  async delete(id: string) {
     Logger.log('delete', 'MeetingService');
 
     return await this.meetingRepository.delete(id);

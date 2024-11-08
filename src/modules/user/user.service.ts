@@ -19,23 +19,27 @@ export class UserService {
   async create(data: CreateUserDto) {
     Logger.log('create', 'UserService');
 
-    let user: IUser;
     try {
       const { email, password, name, registration_provider, pic_url } = data;
-      const hashedPassword = await UtilsService.hashPassword(password);
-      user = await this.userRepository.create({
+      let hashedPassword;
+
+      if (password) {
+        hashedPassword = await UtilsService.hashPassword(password);
+      }
+
+      const user = await this.userRepository.create({
         email,
         password: hashedPassword,
         name,
         registration_provider,
         pic_url,
       });
+
+      return user;
     } catch (error) {
       Logger.log(error.message, 'UserService');
       throw new InternalServerErrorException(error.message);
     }
-
-    return user;
   }
 
   async find(params: FetchQuery) {
@@ -60,7 +64,7 @@ export class UserService {
     return user;
   }
 
-  async findById(id: number) {
+  async findById(id: string) {
     Logger.log('findById', 'UserService');
 
     const user = await this.userRepository.findById(id);
@@ -71,7 +75,7 @@ export class UserService {
     return user;
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     Logger.log('delete', 'UserService');
 
     return await this.userRepository.delete(id);
@@ -81,6 +85,7 @@ export class UserService {
     Logger.log('findUserWithEmail', 'UserService');
 
     const user = await this.userRepository.findOne({ email });
+    console.log('🚀 ~~ UserService ~~ findUserWithEmail ~~ user:', user, email);
 
     return user;
   }

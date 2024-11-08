@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { EnvironmentModule, EnvironmentService } from './environment';
+import { EnvironmentModule } from './environment/environment.module';
+import { EnvironmentService } from './environment/environment.service';
 @Module({
   imports: [EnvironmentModule],
   providers: [EnvironmentService],
