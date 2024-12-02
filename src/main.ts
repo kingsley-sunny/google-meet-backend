@@ -24,15 +24,15 @@ class Server {
 
     const server = app.getHttpServer();
     console.log('🚀 ~~ Server ~~ bootstrap ~~ peer:', peer);
-    const ExpressPeerServer = peer.ExpressPeerServer(server, {
-      corsOptions: { origin: '*' },
-    });
+    // const ExpressPeerServer = peer.ExpressPeerServer(server, {
+    //   corsOptions: { origin: '*' },
+    // });
 
-    app.use('/signal-peer', ExpressPeerServer);
+    // app.use('/signal-peer', ExpressPeerServer);
 
-    ExpressPeerServer.on('connection', (data) => {
-      console.log('🚀 ~~ Server ~~ ExpressPeerServer.on ~~ data:', data);
-    });
+    // ExpressPeerServer.on('connection', (data) => {
+    //   console.log('🚀 ~~ Server ~~ ExpressPeerServer.on ~~ data:', data.id);
+    // });
 
     await app.listen(EnvironmentService.getValue('appPort'));
 

@@ -85,6 +85,22 @@ export class MeetingService {
     }
   }
 
+  async findByToken(token: string) {
+    Logger.log('findByToken', 'MeetingService');
+
+    try {
+      const meeting = await this.meetingRepository.findOne({ token });
+      if (!meeting) {
+        throw new NotFoundException('Meeting not found');
+      }
+
+      return meeting;
+    } catch (error) {
+      Logger.log(error.message, 'findByToken');
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
   async delete(id: string) {
     Logger.log('delete', 'MeetingService');
 

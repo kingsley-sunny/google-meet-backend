@@ -41,6 +41,9 @@ dependencies:
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
+  express:
+    specifier: ^4.21.1
+    version: 4.21.1
   knex:
     specifier: ^3.1.0
     version: 3.1.0(mysql2@3.11.3)

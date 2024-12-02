@@ -28,7 +28,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migrate-start": "npx knex migrate:up; nest start",
     "migrate:prod": "node dist/src/database/database-setup",
-    "start:migrate:prod": "yarn migrate:prod; node dist/src/main"
+    "start:migrate:prod": "yarn migrate:prod; node dist/src/main",
+    "peer": "node dist/src/peer.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -43,6 +44,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "knex": "^3.1.0",
     "mysql2": "^3.11.3",
     "objection": "^3.1.5",
